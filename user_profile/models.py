@@ -1,6 +1,6 @@
 from django.db import models
 from datetime import date
-
+from localflavor.us.models import USStateField, USZipCodeField
 
 class PilotInformation(models.Model):
     pilot_id = models.AutoField(primary_key=True, null=False)
@@ -10,8 +10,8 @@ class PilotInformation(models.Model):
     street_number = models.CharField(max_length=16)
     street_name = models.CharField(max_length=64)
     city = models.CharField(max_length=254)
-    state = models.CharField(max_length=2)
-    zip = models.CharField(max_length=12)
+    state = USStateField(null=True)
+    zip = USZipCodeField(null=True)
     email = models.EmailField(max_length=254, null=False)
     phone = models.CharField(max_length=16)
     certificate_information = models.ForeignKey('CertificateInformation', on_delete=models.CASCADE)
@@ -39,3 +39,7 @@ class CertificateInformation(models.Model):
 
     def __str__(self) -> str:
         return super().__str__()
+
+
+# class StateLookUp(models.Model):
+#     pass
